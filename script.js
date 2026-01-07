@@ -46,6 +46,8 @@ let questions = [
     }
 ];
 
+let correctQuestions = 0;
+
 let currentQuestion = 0;
 
 function init() {
@@ -55,22 +57,59 @@ function init() {
 }
 
 function showQuestion(){
-    let question = questions[currentQuestion];
-    document.getElementById('question-text').innerHTML = question['question'];
 
-    document.getElementById('answer_1').innerHTML = question['answer_1'];
-    document.getElementById('answer_2').innerHTML = question['answer_2'];
-    document.getElementById('answer_3').innerHTML = question['answer_3'];
-    document.getElementById('answer_4').innerHTML = question['answer_4'];
+    if(currentQuestion >= questions.length) {
+        document.getElementById('end-screen').style = '';
+        document.getElementById('question-body').style = 'display: none';
+        document.getElementById('amount-of-questions').innerHTML = questions.length;
+        document.getElementById('amount-of-correct-questions').innerHTML = correctQuestions;
+    } else {
+        let question = questions[currentQuestion];
+        document.getElementById('question-text').innerHTML = question['question'];
+        document.getElementById('answer_1').innerHTML = question['answer_1'];
+        document.getElementById('answer_2').innerHTML = question['answer_2'];
+        document.getElementById('answer_3').innerHTML = question['answer_3'];
+        document.getElementById('answer_4').innerHTML = question['answer_4'];
+    }
 }
 
 function answer(selection){
     let question = questions[currentQuestion];
     let selectedQuestionNumber = selection.slice(-1);
 
+    let idOfRightAnswer = `answer_${question['right_answer']}`;
+
     if(selectedQuestionNumber == question['right_answer']) {
-        console.log('Richtige Antwort!');
+        document.getElementById(selection).parentNode.classList.add('bg-success');
+        correctQuestions++;
     } else {
-        console.log('Falsche Antwort!');
+        document.getElementById(selection).parentNode.classList.add('bg-danger');
+        document.getElementById(idOfRightAnswer).parentNode.classList.add('bg-success');
     }
+
+    document.getElementById('next-button').disabled = false;
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    document.getElementById('next-button').disabled = true;
+    resetAnswerButtons();
+    showQuestion();
+    nextQuestionCounter();
+}
+
+function resetAnswerButtons(){
+    document.getElementById('answer_1').parentNode.classList.remove('bg-danger');
+    document.getElementById('answer_1').parentNode.classList.remove('bg-success');
+    document.getElementById('answer_2').parentNode.classList.remove('bg-danger');
+    document.getElementById('answer_2').parentNode.classList.remove('bg-success');
+    document.getElementById('answer_3').parentNode.classList.remove('bg-danger');
+    document.getElementById('answer_3').parentNode.classList.remove('bg-success');
+    document.getElementById('answer_4').parentNode.classList.remove('bg-danger');
+    document.getElementById('answer_4').parentNode.classList.remove('bg-success');
+}
+
+function nextQuestionCounter(){
+    const questionCounter = document.getElementById('question-counter');
+    questionCounter.textContent = Number(questionCounter.textContent) + 1;
 }

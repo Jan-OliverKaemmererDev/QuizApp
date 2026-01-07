@@ -26,3 +26,15 @@ body {
     cursor: pointer;
     background-color: rgba(55, 151, 207, 0.71);;
 }
+
+.bg-success, .bg-danger {
+    color: white !important;
+}
+
+.win-img {
+    width: 100%;
+}
+
+.end-text {
+    text-align: center;
+}
