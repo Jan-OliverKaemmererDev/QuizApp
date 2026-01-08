@@ -35,6 +35,11 @@ body {
     width: 100%;
 }
 
+.header-end-text {
+    font-size: 38px;
+    margin-bottom: 16px;
+}
+
 .end-text {
     text-align: center;
 }

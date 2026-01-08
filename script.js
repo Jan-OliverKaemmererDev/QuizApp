@@ -59,11 +59,17 @@ function init() {
 function showQuestion(){
 
     if(currentQuestion >= questions.length) {
+        // Show Endscreen
         document.getElementById('end-screen').style = '';
         document.getElementById('question-body').style = 'display: none';
         document.getElementById('amount-of-questions').innerHTML = questions.length;
         document.getElementById('amount-of-correct-questions').innerHTML = correctQuestions;
-    } else {
+        document.getElementById('header-image').src = './img/win.png';
+    } else { // Show question
+        let percent = (currentQuestion + 1) / questions.length;
+        percent = Math.round(percent * 100);
+        document.getElementById('progress-bar').innerHTML = `${percent} %`;
+        document.getElementById('progress-bar').style = `width: ${percent}%;`;
         let question = questions[currentQuestion];
         document.getElementById('question-text').innerHTML = question['question'];
         document.getElementById('answer_1').innerHTML = question['answer_1'];
